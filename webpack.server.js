@@ -1,29 +1,14 @@
 const path = require("path");
-module.exports = {
+const { merge } = require("webpack-merge");
+const commonConfig = require("./webpack.common");
+
+const config = {
   target: "node",
   entry: "./src/server/index.js",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "build"),
   },
-  module: {
-    rules: [
-      {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              [
-                "@babel/preset-env",
-                { targets: { browsers: ["last 2 versions"] } },
-              ],
-              "@babel/preset-react",
-            ],
-          },
-        },
-      },
-    ],
-  },
 };
+
+module.exports = merge(commonConfig, config);
